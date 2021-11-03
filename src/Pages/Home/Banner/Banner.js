@@ -4,8 +4,8 @@ import bg from "../../../images/bg.png"
 import { Button, Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
-const BannerBg = {
-    background: `url(${bg})`,
+const bannerBg = {
+    background: `url(${bg})`
 }
 
 const verticalCenter = {
@@ -17,7 +17,7 @@ const verticalCenter = {
 
 const Banner = () => {
     return (
-        <Container style={BannerBg} sx={{ flexGrow: 1 }}>
+        <Container style={bannerBg} sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid style={{...verticalCenter,textAlign: 'left'}} item xs={12} md={6}>
                     <Box>
