@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom';
 
 const Navigation = () => {
     return (
-        <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <Box sx={{ flexGrow: 2 }}>
+        <AppBar position="relative">
           <Toolbar>
             <IconButton
               size="large"
@@ -26,7 +26,9 @@ const Navigation = () => {
               Doctors Portal
             </Typography>
             <Link to="/appointment">APPOINTMENT</Link>
+            <Link to="/login">
             <Button color="inherit">Login</Button>
+            </Link>
           </Toolbar>
         </AppBar>
       </Box>

@@ -13,7 +13,7 @@ const DentalCare = () => {
                         <Grid xs={12} md={6} style={{ textAlign: "center" }}>
                             <img src={DentalCareImg} alt="" style={{ width: "70%" }} />
                         </Grid>
-                        <Grid xs={12} md={6} style={{ textAlign: "start" }}>
+                        <Grid xs={12} md={6} style={{ textAlign: "center" }}>
                             <Typography variant="h3" component="div" gutterBottom>
                                 Exceptional Dental Care On Your Terms
                             </Typography>

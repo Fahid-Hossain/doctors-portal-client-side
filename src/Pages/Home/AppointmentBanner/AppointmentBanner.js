@@ -15,10 +15,10 @@ const AppointmentBanner = () => {
     return (
         <Box style={appointmentBannerBg} sx={{ flexGrow: 1 }}>
             <Grid container spacing={2} >
-                <Grid item xs={6} md={7}>
-                    <img src={doctor} style={{ width: "400px",marginTop:"-110px"}} alt="" />
+                <Grid item xs={12} md={7}>
+                    <img src={doctor} style={{ width: "75%",marginTop:"-110px"}} alt="" />
                 </Grid>
-                <Grid item xs={8} md={5} align="left" sx={{display: "flex",justifyContent: 'flex-start',textAlign: 'center',alignItems: 'center'}}>
+                <Grid item xs={12} md={5} align="left" sx={{display: "flex",justifyContent: 'center',textAlign: 'left',alignItems: 'center'}}>
                     <Box>
                     <Typography variant="h5" component="h2" style={{color:"#2196f3"}}>
                         Apppoinment
