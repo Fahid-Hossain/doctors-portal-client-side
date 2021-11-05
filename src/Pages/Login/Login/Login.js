@@ -4,9 +4,12 @@ import Grid from '@mui/material/Grid';
 import loginImg from "../../../images/login.png";
 import { Button, TextField, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hook/useAuth';
 
 const Login = () => {
     const [loginData,setLoginData]=useState({})
+
+    const {signInWithGoogle}=useAuth();
 
     //handleLogin submit 
     const handleLogin =(e)=>{
@@ -56,6 +59,9 @@ const Login = () => {
                             <Button>PLEASE REGISTER</Button>
                         </NavLink>
                     </form>
+
+                    
+                    <Button onClick={signInWithGoogle} type="submit" sx={{ my: 2 }} variant="contained">Sign In With Google</Button>
 
                 </Grid>
                 <Grid item xs={12} md={6}>

@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import loginImg from "../../../images/login.png";
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hook/useAuth';
 
 const Register = () => {
     const [loginData, setLoginData] = useState({})
+    //
+    const {RegisterUserWithEmailAndPass,isLoading} =useAuth();
 
     //handleLogin submit 
     const handleLogin = (e) => {
@@ -15,7 +18,13 @@ const Register = () => {
             alert("Your password did not match");
             return;
         }
-        alert("hey,what?")
+        if(loginData.password.length < 6 ){
+            alert("password must be at least 6 characters")
+            return;
+        }
+        //registrations
+        RegisterUserWithEmailAndPass(loginData.email,loginData.password);
+        alert("Register Successfully Done");
     }
     //textField value
     const textFieldHandler = e => {
@@ -25,53 +34,59 @@ const Register = () => {
         // console.log(email, pass)
         const newLoginData = { ...loginData }
         newLoginData[field] = value;
-        console.log(newLoginData);
+        // console.log(newLoginData);
         setLoginData(newLoginData);
     }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                    <form onSubmit={handleLogin} >
-                        <Typography sx={{ mt: 15, color: "#26c6da" }} variant="h5" gutterBottom component="div">
-                            Register
-                        </Typography>
-                        <TextField
-                            onChange={textFieldHandler}
-                            sx={{ width: "75%", m: 3 }}
-                            id="standard-basic"
-                            label="You Email"
-                            type="email"
-                            name="email"
-                            variant="standard" />
-                        <TextField
-                            onChange={textFieldHandler}
-                            sx={{ width: "75%", m: 1 }}
-                            id="standard-password-input"
-                            label="Your Password"
-                            type="password"
-                            name="password"
-                            autoComplete="current-password"
-                            variant="standard"
-                        /> 
-                        <TextField
-                            onChange={textFieldHandler}
-                            sx={{ width: "75%", m: 1 }}
-                            id="standard-password-input"
-                            label="Confirm Password"
-                            type="password"
-                            name="password2"
-                            autoComplete="current-password"
-                            variant="standard"
-                        /> 
-                        <br />
-                        <Button type="submit" sx={{ backgroundColor: '#26c6da', my: 2 }} variant="contained">SUBMIT</Button>
-                        <br />
-                        <span>Already Registered ?</span>
-                        <NavLink style={{ textDecoration: 'none' }} to="/login">
-                            <Button>PLEASE REGISTER</Button>
-                        </NavLink>
-                    </form>
+                   {
+                       !isLoading &&  <form onSubmit={handleLogin} >
+                       <Typography sx={{ mt: 15, color: "#26c6da" }} variant="h5" gutterBottom component="div">
+                           Register
+                       </Typography>
+                       <TextField
+                           onChange={textFieldHandler}
+                           sx={{ width: "75%", m: 3 }}
+                           id="standard-basic"
+                           label="You Email"
+                           type="email"
+                           name="email"
+                           variant="standard" />
+                       <TextField
+                           onChange={textFieldHandler}
+                           sx={{ width: "75%", m: 1 }}
+                           // id="standard-password-input"
+                           label="Your Password"
+                           type="password"
+                           name="password"
+                           autoComplete="current-password"
+                           variant="standard"
+                       /> 
+                       <TextField
+                           onChange={textFieldHandler}
+                           sx={{ width: "75%", m: 1 }}
+                           // id="standard-password-input"
+                           label="Confirm Password"
+                           type="password"
+                           name="password2"
+                           autoComplete="current-password"
+                           variant="standard"
+                       /> 
+                       <br />
+                       <Button type="submit" sx={{ backgroundColor: '#26c6da', my: 2 }} variant="contained">Register</Button>
+                       <br />
+                       <span>Already Registered ?</span>
+                       <NavLink style={{ textDecoration: 'none' }} to="/login">
+                           <Button>PLEASE LOGIN</Button>
+                       </NavLink>
+                   </form>
+                   }
+                   {
+                       isLoading && <CircularProgress />
+                   }
 
                 </Grid>
                 <Grid item xs={12} md={6}>
