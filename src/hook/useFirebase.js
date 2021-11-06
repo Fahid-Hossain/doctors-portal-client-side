@@ -22,11 +22,13 @@ const useFirebase = () => {
             .then((result) => {
                 const user = result.user;
                 setUser(user);
+                setError("");
                 // ...
             }).catch((error) => {
                 // Handle Errors here.
                 const errorMessage = error.message;
                 setError(errorMessage);
+                setUser("");
 
             });
     }
@@ -39,11 +41,13 @@ const useFirebase = () => {
                 // Signed in 
                 const user = result.user;
                 setUser(user);
+                setError("");
                 // ...
             })
             .catch((error) => {
                 const errorMessage = error.message;
                 setError(errorMessage)
+                setUser("");
                 // ..
             })
             .finally(()=>setIsLoading(false));
@@ -51,17 +55,19 @@ const useFirebase = () => {
 
     //SignIn user with email and password
     const LoginUserWithEmailAndPass = (email, password) => {
-        isLoading(true);
+        setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
                 setUser(user);
+                setError("");
                 // ...
             })
             .catch((error) => {
                 const errorMessage = error.message;
                 setError(errorMessage)
+                setUser("");
             })
             .finally(()=>setIsLoading(false));
 
@@ -87,10 +93,11 @@ const useFirebase = () => {
         setIsLoading(true);
         signOut(auth).then(() => {
             // Sign-out successful.
-
+            setError("");
         }).catch((error) => {
             // An error happened.
             setError(error.message)
+            setUser("");
         })
         .finally(()=>setIsLoading(false))
     }

@@ -2,29 +2,28 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import loginImg from "../../../images/login.png";
-import { Button, CircularProgress, TextField, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import useAuth from '../../../hook/useAuth';
 
 const Register = () => {
     const [loginData, setLoginData] = useState({})
     //
-    const {RegisterUserWithEmailAndPass,isLoading} =useAuth();
+    const { RegisterUserWithEmailAndPass, isLoading, user, error } = useAuth();
 
     //handleLogin submit 
     const handleLogin = (e) => {
         e.preventDefault();
-        if(loginData.password !== loginData.password2){
+        if (loginData.password !== loginData.password2) {
             alert("Your password did not match");
             return;
         }
-        if(loginData.password.length < 6 ){
+        if (loginData.password.length < 6) {
             alert("password must be at least 6 characters")
             return;
         }
         //registrations
-        RegisterUserWithEmailAndPass(loginData.email,loginData.password);
-        alert("Register Successfully Done");
+        RegisterUserWithEmailAndPass(loginData.email, loginData.password);
     }
     //textField value
     const textFieldHandler = e => {
@@ -42,51 +41,58 @@ const Register = () => {
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                   {
-                       !isLoading &&  <form onSubmit={handleLogin} >
-                       <Typography sx={{ mt: 15, color: "#26c6da" }} variant="h5" gutterBottom component="div">
-                           Register
-                       </Typography>
-                       <TextField
-                           onChange={textFieldHandler}
-                           sx={{ width: "75%", m: 3 }}
-                           id="standard-basic"
-                           label="You Email"
-                           type="email"
-                           name="email"
-                           variant="standard" />
-                       <TextField
-                           onChange={textFieldHandler}
-                           sx={{ width: "75%", m: 1 }}
-                           // id="standard-password-input"
-                           label="Your Password"
-                           type="password"
-                           name="password"
-                           autoComplete="current-password"
-                           variant="standard"
-                       /> 
-                       <TextField
-                           onChange={textFieldHandler}
-                           sx={{ width: "75%", m: 1 }}
-                           // id="standard-password-input"
-                           label="Confirm Password"
-                           type="password"
-                           name="password2"
-                           autoComplete="current-password"
-                           variant="standard"
-                       /> 
-                       <br />
-                       <Button type="submit" sx={{ backgroundColor: '#26c6da', my: 2 }} variant="contained">Register</Button>
-                       <br />
-                       <span>Already Registered ?</span>
-                       <NavLink style={{ textDecoration: 'none' }} to="/login">
-                           <Button>PLEASE LOGIN</Button>
-                       </NavLink>
-                   </form>
-                   }
-                   {
-                       isLoading && <CircularProgress />
-                   }
+                    {
+                        !isLoading && <form onSubmit={handleLogin} >
+                            <Typography sx={{ mt: 15, color: "#26c6da" }} variant="h5" gutterBottom component="div">
+                                Register
+                            </Typography>
+                            <TextField
+                                onChange={textFieldHandler}
+                                sx={{ width: "75%", m: 3 }}
+                                id="standard-basic"
+                                label="You Email"
+                                type="email"
+                                name="email"
+                                variant="standard" />
+                            <TextField
+                                onChange={textFieldHandler}
+                                sx={{ width: "75%", m: 1 }}
+                                // id="standard-password-input"
+                                label="Your Password"
+                                type="password"
+                                name="password"
+                                autoComplete="current-password"
+                                variant="standard"
+                            />
+                            <TextField
+                                onChange={textFieldHandler}
+                                sx={{ width: "75%", m: 1 }}
+                                // id="standard-password-input"
+                                label="Confirm Password"
+                                type="password"
+                                name="password2"
+                                autoComplete="current-password"
+                                variant="standard"
+                            />
+                            <br />
+                            <Button type="submit" sx={{ backgroundColor: '#26c6da', my: 2 }} variant="contained">Register</Button>
+                            <br />
+                            <span>Already Registered ?</span>
+                            <NavLink style={{ textDecoration: 'none' }} to="/login">
+                                <Button>PLEASE LOGIN</Button>
+                            </NavLink>
+                        </form>
+                    }
+                    {
+                        isLoading && <CircularProgress />
+                    }
+                    {/* //Register success message */}
+                    {
+                        user?.email && <Alert severity="success">Your Registration successfully Done!</Alert>
+                    }
+                    {
+                        error && <Alert severity="error">{error}</Alert>
+                    }
 
                 </Grid>
                 <Grid item xs={12} md={6}>
