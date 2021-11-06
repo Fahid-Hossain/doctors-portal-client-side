@@ -54,13 +54,16 @@ const useFirebase = () => {
     }
 
     //SignIn user with email and password
-    const LoginUserWithEmailAndPass = (email, password) => {
+    const LoginUserWithEmailAndPass = (email, password, location, history) => {
         setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then((result) => {
                 // Signed in 
-                const user = userCredential.user;
+                const user = result.user;
                 setUser(user);
+                //redirect to wanna go page from login page
+                const destination = location?.state?.from || "/";
+                history.replace(destination);
                 setError("");
                 // ...
             })

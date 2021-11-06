@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import loginImg from "../../../images/login.png";
 import { Alert, Button, CircularProgress, TextField, Typography } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useLocation,useHistory } from 'react-router-dom';
 import useAuth from '../../../hook/useAuth';
 
 const Login = () => {
@@ -13,11 +13,15 @@ const Login = () => {
 
     const { signInWithGoogle } = useAuth();
 
+    //for redirect 
+    const location = useLocation();
+    const history = useHistory();
+
     //handleLogin submit 
     const handleLogin = (e) => {
         e.preventDefault();
         //login user
-        LoginUserWithEmailAndPass(loginData.email, loginData.password);
+        LoginUserWithEmailAndPass(loginData.email, loginData.password,location,history);
     }
     //textField value
     const textFieldHandler = e => {
