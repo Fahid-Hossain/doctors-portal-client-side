@@ -34,6 +34,12 @@ const Login = () => {
         console.log(newLoginData);
         setLoginData(newLoginData);
     }
+
+    //handle googleSignIn 
+    const handleGoogleSignIn =()=>{
+        signInWithGoogle(location,history);
+    }
+    
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
@@ -79,7 +85,7 @@ const Login = () => {
                         error && <Alert severity="error">{error}</Alert>
                     }
 
-                    <Button onClick={signInWithGoogle} type="submit" sx={{ my: 2 }} variant="contained">Sign In With Google</Button>
+                    <Button onClick={handleGoogleSignIn} type="submit" sx={{ my: 2 }} variant="contained">Sign In With Google</Button>
 
                 </Grid>
                 <Grid item xs={12} md={6}>

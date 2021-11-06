@@ -3,16 +3,18 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import loginImg from "../../../images/login.png";
 import { Alert, Button, CircularProgress, TextField, Typography } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useHistory } from 'react-router-dom';
 import useAuth from '../../../hook/useAuth';
 
 const Register = () => {
     const [loginData, setLoginData] = useState({})
     //
     const { RegisterUserWithEmailAndPass, isLoading, user, error } = useAuth();
+    //
+    const history = useHistory();
 
     //handleLogin submit 
-    const handleLogin = (e) => {
+    const handleOnBlur = (e) => {
         e.preventDefault();
         if (loginData.password !== loginData.password2) {
             alert("Your password did not match");
@@ -23,7 +25,7 @@ const Register = () => {
             return;
         }
         //registrations
-        RegisterUserWithEmailAndPass(loginData.email, loginData.password);
+        RegisterUserWithEmailAndPass(loginData.name,loginData.email, loginData.password,history);
     }
     //textField value
     const textFieldHandler = e => {
@@ -42,18 +44,26 @@ const Register = () => {
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                     {
-                        !isLoading && <form onSubmit={handleLogin} >
+                        !isLoading && <form onSubmit={handleOnBlur} >
                             <Typography sx={{ mt: 15, color: "#26c6da" }} variant="h5" gutterBottom component="div">
                                 Register
                             </Typography>
                             <TextField
                                 onChange={textFieldHandler}
-                                sx={{ width: "75%", m: 3 }}
+                                sx={{ width: "75%", m: 1 }}
+                                id="standard-basic"
+                                label="You Name"
+                                name="name"
+                                variant="standard" />
+                            <TextField
+                                onChange={textFieldHandler}
+                                sx={{ width: "75%", m: 1 }}
                                 id="standard-basic"
                                 label="You Email"
                                 type="email"
                                 name="email"
                                 variant="standard" />
+                           
                             <TextField
                                 onChange={textFieldHandler}
                                 sx={{ width: "75%", m: 1 }}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword , signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword , signOut, onAuthStateChanged,updateProfile  } from "firebase/auth";
 import firebaseIntialization from '../Pages/Login/Firebase/firebase.init';
 
 //initialize firebase app
@@ -17,11 +17,13 @@ const useFirebase = () => {
 
 
     //google Sign In
-    const signInWithGoogle = () => {
+    const signInWithGoogle = (location,history) => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
                 setUser(user);
+                const destination = location?.state?.from || "/"
+                history.replace(destination);
                 setError("");
                 // ...
             }).catch((error) => {
@@ -34,14 +36,30 @@ const useFirebase = () => {
     }
 
     // Register user with email and password
-    const RegisterUserWithEmailAndPass = (email, password) => {
+    const RegisterUserWithEmailAndPass = (name,email, password,history) => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 // Signed in 
-                const user = result.user;
-                setUser(user);
+                // const user = result.user;
+                // setUser(user);
                 setError("");
+                ///update name on profile
+                const newUser = {displayName: name , email}
+                setUser(newUser);
+                //send name to firebase after creation
+                updateProfile(auth.currentUser, {
+                    displayName: name
+                  }).then(() => {
+                    // Profile updated!
+                    // ...
+                  }).catch((error) => {
+                    // An error occurred
+                    // ...
+                  });
+                
+                  //redirect 
+                history.replace("/");
                 // ...
             })
             .catch((error) => {
