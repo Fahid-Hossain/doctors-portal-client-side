@@ -53,7 +53,7 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date,setBookin
             ...bookingInfo,
             time,
             serviceName:name,
-            date: date.toDateString()
+            date: date.toLocaleDateString()
         }
         //send to the database
         console.log(appointment);

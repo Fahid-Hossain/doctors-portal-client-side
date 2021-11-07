@@ -15,15 +15,18 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import Appointments from '../Appointments/Appointments';
 import Calendar from '../../Shared/Calendar/Calendar';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [date,setDate] = React.useState(new Date());
+
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -32,6 +35,9 @@ function Dashboard(props) {
     const drawer = (
         <div>
             <Toolbar />
+            <Link to="/appointment" style={{textDecoration: 'none'}}>
+            <Button type="submit" variant="outlined">Take An Appointment</Button>
+            </Link>
             <Divider />
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -112,11 +118,11 @@ function Dashboard(props) {
                 <Toolbar />
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
-                        <Grid item xs={8}>
-                         <Calendar></Calendar>
+                        <Grid item xs={12} md={5}>
+                         <Calendar date={date} setDate={setDate}></Calendar>
                         </Grid>
-                        <Grid item xs={4}>
-                        <Appointments></Appointments>
+                        <Grid item xs={12} md={7}>
+                        <Appointments date={date}></Appointments>
                         </Grid>
                     </Grid>
                 </Box>
