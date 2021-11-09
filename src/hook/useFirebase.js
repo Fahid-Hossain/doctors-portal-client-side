@@ -22,6 +22,8 @@ const useFirebase = () => {
             .then((result) => {
                 const user = result.user;
                 setUser(user);
+                //save or update user info
+                saveUser(user.displayName,user.email,"PUT");
                 const destination = location?.state?.from || "/"
                 history.replace(destination);
                 setError("");
@@ -47,6 +49,8 @@ const useFirebase = () => {
                 ///update name on profile
                 const newUser = {displayName: name , email}
                 setUser(newUser);
+                //save user info
+                saveUser(name,email,"POST");
                 //send name to firebase after creation
                 updateProfile(auth.currentUser, {
                     displayName: name
@@ -121,6 +125,22 @@ const useFirebase = () => {
             setUser("");
         })
         .finally(()=>setIsLoading(false))
+    }
+
+    //save user info
+    const saveUser=(displayName,email,method)=>{
+        const user={displayName,email};
+        fetch("http://localhost:5000/users",{
+            method: method,
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data);
+        })
     }
 
 
