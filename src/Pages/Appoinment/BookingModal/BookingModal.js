@@ -57,7 +57,7 @@ const BookingModal = ({ openBooking, handleBookingClose, booking, date,setBookin
         }
         //send to the database
         console.log(appointment);
-        fetch("http://localhost:5000/appointments",{
+        fetch("https://dry-reef-29670.herokuapp.com/appointments",{
             method: 'POST',
             headers:{
                 "content-type": "application/json"

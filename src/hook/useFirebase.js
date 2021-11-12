@@ -137,7 +137,7 @@ const useFirebase = () => {
     //save user info
     const saveUser=(displayName,email,method)=>{
         const user={displayName,email};
-        fetch("http://localhost:5000/users",{
+        fetch("https://dry-reef-29670.herokuapp.com/users",{
             method: method,
             headers: {
                 "content-type": "application/json"
@@ -152,7 +152,7 @@ const useFirebase = () => {
 
     //admin setup 
     useEffect(() => {
-        fetch(`http://localhost:5000/users/${user.email}`)
+        fetch(`https://dry-reef-29670.herokuapp.com/users/${user.email}`)
         .then(res=>res.json())
         .then(data=>{
             setAdmin(data.admin)
