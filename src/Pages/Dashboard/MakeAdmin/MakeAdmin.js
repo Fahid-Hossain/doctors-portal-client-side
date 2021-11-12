@@ -1,8 +1,9 @@
-import { Button, TextField } from '@mui/material';
+import { Alert, Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
 
 const MakeAdmin = () => {
     const [email,setEmail]= useState("");
+    const [success,setSuccess]=useState(false);
     //form submit
     const handleAdminSubmit = e =>{
         e.preventDefault();
@@ -17,6 +18,7 @@ const MakeAdmin = () => {
         .then(res=>res.json())
         .then(data=>{
             console.log(data);
+            setSuccess(true);
         })
     }
     // onBlur event
@@ -29,6 +31,7 @@ const MakeAdmin = () => {
             <h1>Make an Admin</h1>
             <form onSubmit={handleAdminSubmit}>
                 <TextField 
+                sx={{width:"30%"}}
                 label="Email"
                 variant="standard"
                 type="email"
@@ -38,6 +41,8 @@ const MakeAdmin = () => {
                 </TextField>
                 <Button type="submit" variant="contained" sx={{margin:"20px"}}>Dashboard</Button>
             </form>
+
+           { success && <Alert severity="success">Admin added successfully Done!</Alert>}
         </div>
     );
 };

@@ -29,12 +29,14 @@ import {
 import DashboardHome from '../DashboardHome.js/DashboardHome';
 import Doctorsadd from '../DoctorsAdd/Doctorsadd';
 import MakeAdmin from '../MakeAdmin/MakeAdmin';
+import useAuth from '../../../hook/useAuth';
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const {admin} = useAuth();
 
 
     const handleDrawerToggle = () => {
@@ -52,12 +54,16 @@ function Dashboard(props) {
         <Link to={`${url}`} style={{ textDecoration: 'none' }}>
             <Button type="submit" variant="outlined">Dashboard</Button>
         </Link>
-        <Link to={`${url}/doctorsadd`} style={{ textDecoration: 'none' }}>
+        {
+            admin && <Box>
+                   <Link to={`${url}/doctorsadd`} style={{ textDecoration: 'none' }}>
             <Button type="submit" variant="outlined">Add Doctors</Button>
         </Link>
         <Link to={`${url}/makeAdmin`} style={{ textDecoration: 'none' }}>
                 <Button type="submit" variant="outlined">Make Admin</Button>
             </Link>
+            </Box>
+        }
         <Divider />
         <List>
             {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
