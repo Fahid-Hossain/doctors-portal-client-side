@@ -15,44 +15,66 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Button, Grid } from '@mui/material';
-import Appointments from '../Appointments/Appointments';
-import Calendar from '../../Shared/Calendar/Calendar';
+import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+
+//nesting routing 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useParams,
+    useRouteMatch
+} from "react-router-dom";
+import DashboardHome from '../DashboardHome.js/DashboardHome';
+import Doctorsadd from '../DoctorsAdd/Doctorsadd';
+import MakeAdmin from '../MakeAdmin/MakeAdmin';
 
 const drawerWidth = 200;
 
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [date,setDate] = React.useState(new Date());
 
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-
+    
+    //nesting routing path
+    let { path, url } = useRouteMatch();
     const drawer = (
-        <div>
-            <Toolbar />
-            <Link to="/appointment" style={{textDecoration: 'none'}}>
+    <div>
+        <Toolbar />
+        <Link to="/appointment" style={{ textDecoration: 'none' }}>
             <Button type="submit" variant="outlined">Take An Appointment</Button>
+        </Link>
+        <Link to={`${url}`} style={{ textDecoration: 'none' }}>
+            <Button type="submit" variant="outlined">Dashboard</Button>
+        </Link>
+        <Link to={`${url}/doctorsadd`} style={{ textDecoration: 'none' }}>
+            <Button type="submit" variant="outlined">Add Doctors</Button>
+        </Link>
+        <Link to={`${url}/makeAdmin`} style={{ textDecoration: 'none' }}>
+                <Button type="submit" variant="outlined">Make Admin</Button>
             </Link>
-            <Divider />
-            <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>
-                            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
-        </div>
+        <Divider />
+        <List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                <ListItem button key={text}>
+                    <ListItemIcon>
+                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                </ListItem>
+            ))}
+        </List>
+    </div>
     );
 
     const container = window !== undefined ? () => window().document.body : undefined;
+
+
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -116,16 +138,17 @@ function Dashboard(props) {
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} md={5}>
-                         <Calendar date={date} setDate={setDate}></Calendar>
-                        </Grid>
-                        <Grid item xs={12} md={7}>
-                        <Appointments date={date}></Appointments>
-                        </Grid>
-                    </Grid>
-                </Box>
+                <Switch>
+                    <Route exact path={`${url}`}>
+                        <DashboardHome></DashboardHome>
+                    </Route>
+                    <Route path={`${url}/doctorsadd`}>
+                        <Doctorsadd></Doctorsadd>
+                    </Route>
+                    <Route path={`${url}/makeAdmin`}>
+                        <MakeAdmin></MakeAdmin>
+                    </Route>
+                </Switch>
             </Box>
         </Box>
     );
