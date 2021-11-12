@@ -30,6 +30,7 @@ import DashboardHome from '../DashboardHome.js/DashboardHome';
 import Doctorsadd from '../DoctorsAdd/Doctorsadd';
 import MakeAdmin from '../MakeAdmin/MakeAdmin';
 import useAuth from '../../../hook/useAuth';
+import AdminRoute from '../../Login/AdminRoute/AdminRoute';
 
 const drawerWidth = 200;
 
@@ -148,12 +149,12 @@ function Dashboard(props) {
                     <Route exact path={`${url}`}>
                         <DashboardHome></DashboardHome>
                     </Route>
-                    <Route path={`${url}/doctorsadd`}>
+                    <AdminRoute path={`${url}/doctorsadd`}>
                         <Doctorsadd></Doctorsadd>
-                    </Route>
-                    <Route path={`${url}/makeAdmin`}>
+                    </AdminRoute>
+                    <AdminRoute path={`${url}/makeAdmin`}>
                         <MakeAdmin></MakeAdmin>
-                    </Route>
+                    </AdminRoute>
                 </Switch>
             </Box>
         </Box>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword , signOut, onAuthStateChanged,updateProfile  } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword , signOut, onAuthStateChanged,updateProfile,getIdToken  } from "firebase/auth";
 import firebaseIntialization from '../Pages/Login/Firebase/firebase.init';
 
 //initialize firebase app
@@ -9,6 +9,7 @@ const useFirebase = () => {
     //useStates
     const [user, setUser] = useState({});
     const [error, setError] = useState("");
+    const [token, setToken] = useState("");
     const [isLoading,setIsLoading] = useState(true);
     const [admin,setAdmin]= useState(false);
     //providers
@@ -104,6 +105,11 @@ const useFirebase = () => {
        const unsubscribed = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
+                getIdToken(user)
+                .then(idToken =>{
+                    console.log(idToken);
+                    setToken(idToken);
+                })
                 // ...
             } else {
                 // User is signed out
@@ -158,6 +164,7 @@ const useFirebase = () => {
     return {
         user,
         admin,
+        token,
         error,
         signInWithGoogle,
         RegisterUserWithEmailAndPass,
